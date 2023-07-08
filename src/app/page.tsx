@@ -1,7 +1,14 @@
-import Image from 'next/image'
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <h1>Hello, Next.js!</h1>
+    <header className="flex justify-between items-center">
+      <h1>Simple Flashcards</h1>
+      <ul>
+        <li>
+          <Link href='/create'>Create Card</Link>
+        </li>
+      </ul>
+    </header>
   )
 }
