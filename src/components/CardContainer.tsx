@@ -1,5 +1,11 @@
-import Card from '../components/Card'
+import { FlashCard } from '../components/FlashCard';
 
-export default function CardContainer() {
-    return <Card />
+export function CardContainer() {
+    return (
+      <div
+        className='flex justify-center items-center grow'
+      >
+        <FlashCard />
+      </div>
+    );
 }
