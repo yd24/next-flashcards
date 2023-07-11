@@ -1,14 +1,13 @@
-import Link from 'next/link';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import CardContainer from '../components/CardContainer';
 
 export default function Home() {
   return (
-    <header className="flex justify-between items-center">
-      <h1>Simple Flashcards</h1>
-      <ul>
-        <li>
-          <Link href='/create'>Create Card</Link>
-        </li>
-      </ul>
-    </header>
+    <>
+      <Header />
+      <CardContainer />
+      <Footer />
+    </>
   )
 }
