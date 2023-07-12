@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-auto p-4 flex flex-col justify-between min-h-screen`}>
+      <body className={`${inter.className} mx-auto flex flex-col justify-between min-h-screen`}>
         <Providers>
           {children}
         </Providers>

@@ -6,34 +6,26 @@ import {
     Center,
     Flex,
     Text,
-    IconButton,
     Button,
     Stack,
-    Collapse,
-    Icon,
-    Link,
     Menu,
     MenuList,
     MenuItem,
     MenuButton,
     MenuDivider,
     useColorModeValue,
-    useBreakpointValue,
     useDisclosure,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons'
 
 export function Header() {
-    const { isOpen, onToggle } = useDisclosure()
-
     return (
         <Box>
             <Flex
                 bg={useColorModeValue('white', 'gray.800')}
                 color={useColorModeValue('gray.600', 'white')}
                 minH={'60px'}
-                py={{ base: 2 }}
-                px={{ base: 4 }}
+                py={{ base: 6 }}
+                px={{ base: 6 }}
                 borderBottom={1}
                 borderStyle={'solid'}
                 borderColor={useColorModeValue('gray.200', 'gray.900')}
