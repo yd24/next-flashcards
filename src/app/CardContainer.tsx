@@ -1,5 +1,5 @@
-import { FlashCard } from '../components/FlashCard';
-import { FlashCardButtons } from '../components/FlashCardButtons'
+import { FlashCard } from './FlashCard';
+import { FlashCardButtons } from './FlashCardButtons'
 
 export function CardContainer() {
     return (
