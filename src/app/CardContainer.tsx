@@ -1,5 +1,5 @@
 import { FlashCard } from './FlashCard';
-import { FlashCardButtons } from './FlashCardButtons'
+import { FlashCardButtons } from './FlashCardButtons';
 
 export function CardContainer() {
     return (
