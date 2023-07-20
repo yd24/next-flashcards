@@ -5,26 +5,25 @@ import { prisma } from '../../db';
 export async function ListContainer() {
     const cards = await prisma.card.findMany();
 
-    const getSelectedCard = () => {
-
-    };
-
-    const addCard = () => {
-
+    const createCard = async() => {
+      'use server'
+      const createdCard = await prisma.card.create({
+        data: {
+          question: 'New Flashcard',
+          answer: 'Fill out your answer here.',
+          learned: false,
+        }
+      });
+      return createdCard;
     };
 
     const deleteCard = () => {
-
-    };
-
-    const updateCard = () => {
-
     };
 
     return (
       <div className="flex items-center grow">
         <div className="flex justify-flex-start items-flex-start grow px-12">
-            <CardList cards={cards}/>
+            <CardList cards={cards} createCard={createCard}/>
             <CardData />
         </div>
       </div>
