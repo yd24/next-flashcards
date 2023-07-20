@@ -14,7 +14,6 @@ import {
     MenuButton,
     MenuDivider,
     useColorModeValue,
-    useDisclosure,
 } from '@chakra-ui/react'
 
 export function Header() {

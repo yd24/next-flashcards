@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-
 import { Card } from '@chakra-ui/react';
 
 export function FlashCard() {

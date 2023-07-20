@@ -1,10 +1,10 @@
 'use client'
 
-import { Flex, Input, Stack, HStack, Button, Text, Textarea } from '@chakra-ui/react'
+import { Flex, Input, Stack, HStack, Button, Checkbox, Text, Textarea } from '@chakra-ui/react'
 
 export function CardData(props: any) {
     return (
-        <Stack className="flex grow p-6" spacing={6}>
+        <Stack className="w-96 p-6 grow" spacing={6}>
             <Stack>
                 <Text>Question</Text>
                 <Input />
@@ -12,12 +12,17 @@ export function CardData(props: any) {
 
             <Stack>
                 <Text>Answer</Text>
-                <Textarea />
+                <Textarea resize="vertical"/>
             </Stack>
 
-            <HStack>
-                <Button>Save Changes</Button>
-                <Button>Mark Learned</Button>
+            <HStack className="mt-5" justify='space-between'>
+                <HStack spacing={5}>
+                  <Checkbox>Learned</Checkbox>
+                  <Checkbox>Format as Code</Checkbox>
+                </HStack>
+                <div>
+                  <Button>Save Changes</Button>
+                </div>
             </HStack>
         </Stack>
     );
