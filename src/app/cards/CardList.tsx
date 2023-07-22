@@ -5,31 +5,37 @@ import { useState, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { setCards } from '../store/cardsSlice';
-import type { FlashCard } from '../../utils/cards';
+import type { FlashCard, FlashCards } from '../../utils/cards';
 import type { CreateCardResult, DeleteCardResult } from './actions';
 
 export function CardList({
+    cards,
     selectedCard,
     createCard,
     deleteCard,
     selectCard,
 }: {
+    cards: FlashCards;
     selectedCard: FlashCard | null;
     createCard: () => Promise<CreateCardResult>;
     deleteCard: (cardID: string) => Promise<DeleteCardResult>;
     selectCard: (card: FlashCard | null) => void;
 }) {
-    const dispatch = useAppDispatch();
-    const cardsList = useAppSelector((state) => state.cards.cardsList);
+    
+  /*const dispatch = useAppDispatch();
+    const cardsList = useAppSelector((state) => state.cards.cardsList);*/
+    const [cardsList, setCards] = useState(cards);
     const [cardError, setCardError] = useState({ error: '' });
     const selectedRef = useRef<HTMLLIElement | null>(null);
 
     const createCardHandler = async () => {
         try {
             let createdCard = await createCard();
-            dispatch(setCards([...cardsList, createdCard]));
+            //dispatch(setCards([...cardsList, createdCard]));
+            setCards([...cardsList, createdCard]);
             setCardError({ error: '' });
             selectCard(createdCard);
+            console.log(selectedRef.current);
             selectedRef.current?.scrollIntoView({ behavior: 'smooth' });
         } catch (e) {
             console.error(e);
@@ -47,7 +53,7 @@ export function CardList({
                     cardsList.findIndex((card: FlashCard) => card.id === cardID),
                     1
                 );
-                dispatch(setCards(updatedCardsList));
+                setCards(updatedCardsList);
                 let previousCard: FlashCard | null =
                     updatedCardsList.length > 0
                         ? updatedCardsList[updatedCardsList.length - 1]

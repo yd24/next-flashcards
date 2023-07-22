@@ -20,11 +20,11 @@ export function CardManager({
     const [selectedCard, setSelectedCard] = useState<FlashCard | null>(null);
 
     //Check for if someone navigates directly to card manager, fetch card data
-    const cardsList = useAppSelector((state) => state.cards.cardsList);
-    if (cardsList.length === 0) {
+    //const cardsList = useAppSelector((state) => state.cards.cardsList);
+    /*if (cardsList.length === 0) {
         const dispatch = useAppDispatch();
         dispatch(setCards(cards));
-    }
+    }*/
 
     const selectCard = (card: FlashCard | null) => {
         setSelectedCard(card);
@@ -33,6 +33,7 @@ export function CardManager({
     return (
         <div className="flex justify-flex-start items-flex-start px-12 gap-20">
             <CardList
+                cards={cards}
                 createCard={createCard}
                 deleteCard={deleteCard}
                 selectCard={selectCard}
