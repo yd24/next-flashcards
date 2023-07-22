@@ -49,14 +49,12 @@ export function CardList({
                 let cardID = selectedCard?.id;
                 await deleteCard(cardID);
                 let updatedCardsList = [...cardsList];
-                updatedCardsList.splice(
-                    cardsList.findIndex((card: FlashCard) => card.id === cardID),
-                    1
-                );
+                let index = cardsList.findIndex((card: FlashCard) => card.id === cardID)
+                updatedCardsList.splice(index, 1);
                 setCards(updatedCardsList);
                 let previousCard: FlashCard | null =
                     updatedCardsList.length > 0
-                        ? updatedCardsList[updatedCardsList.length - 1]
+                        ? (index < updatedCardsList.length ? updatedCardsList[index] : updatedCardsList[updatedCardsList.length - 1])
                         : null;
                 selectCard(previousCard);
                 setCardError({ error: '' });
