@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import FlashCard from '../common/FlashCard'
+import type { FlashCard } from '../../utils/cards';
 
 interface CardsState {
     cardsList: FlashCard[]

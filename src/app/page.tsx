@@ -1,11 +1,10 @@
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { CardContainer } from './CardContainer';
-import { prisma } from '../db';
-import FlashCard from './common/FlashCard';
+import { getCards } from '../utils/cards';
 
 export default async function Home() {
-  const cards: FlashCard[] = await prisma.card.findMany()
+  const cards = await getCards();
 
   return (
     <>

@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Flex, Input, Stack, HStack, Button, Checkbox, Text, Textarea } from '@chakra-ui/react'
-import FlashCard from '../common/FlashCard'
+import type { FlashCard } from '../../utils/cards'
 
 interface Props {
   selectedCard: FlashCard | null

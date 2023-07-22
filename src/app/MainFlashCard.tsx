@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { Card, Spinner } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from './hooks';
-import FlashCard from './common/FlashCard';
+import type { getCards } from '../utils/cards';
+import type { FlashCard } from './common/FlashCard';
 
-export function MainFlashCard() {
+export function MainFlashCard({cards}: {cards: Awaited<ReturnType<typeof getCards>>}) {
   let [currentCard, setCurrentCard] = useState<FlashCard | null>(null);
   let [flipped, setFlipped] = useState(false);
-  let cards: FlashCard[] = useAppSelector(state => state.cards.cardsList);
+  /*let cards: FlashCard[] = useAppSelector(state => state.cards.cardsList);*/
   
   const clickCard = () => setFlipped(!flipped);
   const getRandom = (max: number): number => {

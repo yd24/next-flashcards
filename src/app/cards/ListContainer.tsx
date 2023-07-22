@@ -1,30 +1,11 @@
 import { CardManager } from './CardManager'
 import { prisma } from '../../db'
+import { getCards } from '../../utils/cards'
+import { createCard, deleteCard } from './actions';
 
 export async function ListContainer() {
-    const cards = await prisma.card.findMany();
-
-    const createCard = async () => {
-        'use server'
-
-        const createdCard = await prisma.card.create({
-            data: {
-                question: 'New Flashcard',
-                answer: 'Fill out your answer here.',
-                learned: false,
-            },
-        })
-        return createdCard
-    }
-
-    const deleteCard = async (cardID: string) => {
-        'use server'
-
-        const deletedCard = await prisma.card.delete({
-            where: { id: cardID },
-        })
-        return deletedCard
-    }
+    /*const cards = await prisma.card.findMany();*/
+    const cards = await getCards();
 
     return (
         <div className="flex flex-col justify-flex-start grow pr-12">

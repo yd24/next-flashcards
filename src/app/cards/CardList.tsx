@@ -1,79 +1,88 @@
-'use client'
+'use client';
 
-import { Button, Stack, Flex, List, ListItem } from '@chakra-ui/react'
-import { useState, MouseEvent, useRef } from 'react'
-import { useAppSelector, useAppDispatch } from '../hooks'
+import { Button, Stack, Flex, List, ListItem } from '@chakra-ui/react';
+import { useState, useRef } from 'react';
+import type { MouseEvent } from 'react';
+import { useAppSelector, useAppDispatch } from '../hooks';
 import { setCards } from '../store/cardsSlice';
-import FlashCard from '../common/FlashCard'
+import type { FlashCard } from '../../utils/cards';
+import type { CreateCardResult, DeleteCardResult } from './actions';
 
-interface Props {
-    selectedCard: FlashCard | null
-    createCard: () => any
-    deleteCard: (id: string) => any
-    selectCard: (card: FlashCard | null) => any
-}
-
-export function CardList(props: Props) {
+export function CardList({
+    selectedCard,
+    createCard,
+    deleteCard,
+    selectCard,
+}: {
+    selectedCard: FlashCard | null;
+    createCard: () => Promise<CreateCardResult>;
+    deleteCard: (cardID: string) => Promise<DeleteCardResult>;
+    selectCard: (card: FlashCard | null) => void;
+}) {
     const dispatch = useAppDispatch();
-    const cardsList = useAppSelector(state => state.cards.cardsList);
-    const [cardError, setCardError] = useState({ error: '' })
+    const cardsList = useAppSelector((state) => state.cards.cardsList);
+    const [cardError, setCardError] = useState({ error: '' });
     const selectedRef = useRef<HTMLLIElement | null>(null);
 
     const createCardHandler = async () => {
         try {
-            let createdCard = await props.createCard()
-            dispatch(setCards([...cardsList, createdCard]))
-            setCardError({ error: '' })
-            props.selectCard(createdCard)
-            selectedRef.current?.scrollIntoView();
+            let createdCard = await createCard();
+            dispatch(setCards([...cardsList, createdCard]));
+            setCardError({ error: '' });
+            selectCard(createdCard);
+            selectedRef.current?.scrollIntoView({ behavior: 'smooth' });
         } catch (e) {
-            console.error(e)
-            setCardError({ error: 'Error creating card' })
+            console.error(e);
+            setCardError({ error: 'Error creating card' });
         }
-    }
+    };
 
     const deleteCardHandler = async (e: any) => {
         try {
-            if (props.selectedCard) {
-                let cardID = props.selectedCard?.id
-                await props.deleteCard(cardID)
-                let updatedCardsList = [...cardsList]
+            if (selectedCard) {
+                let cardID = selectedCard?.id;
+                await deleteCard(cardID);
+                let updatedCardsList = [...cardsList];
                 updatedCardsList.splice(
                     cardsList.findIndex((card: FlashCard) => card.id === cardID),
                     1
-                )
-                dispatch(setCards(updatedCardsList))
-                props.selectCard(null)
-                setCardError({ error: '' })
+                );
+                dispatch(setCards(updatedCardsList));
+                let previousCard: FlashCard | null =
+                    updatedCardsList.length > 0
+                        ? updatedCardsList[updatedCardsList.length - 1]
+                        : null;
+                selectCard(previousCard);
+                setCardError({ error: '' });
             }
         } catch (e) {
-            console.error(e)
-            setCardError({ error: 'Error deleting card' })
+            console.error(e);
+            setCardError({ error: 'Error deleting card' });
         }
-    }
+    };
 
     const selectCardHandler = (e: any) => {
-        let cardID = e.target.id
-        let pickedCard = cardsList[cardsList.findIndex((card: FlashCard) => card.id === cardID)]
-        props.selectCard(pickedCard)
-    }
+        let cardID = e.target.id;
+        let pickedCard = cardsList[cardsList.findIndex((card: FlashCard) => card.id === cardID)];
+        selectCard(pickedCard);
+    };
 
-    const cardItemCSS = 'p-3 cursor-pointer'
+    const cardItemCSS = 'p-3 cursor-pointer';
 
     return (
         <Stack className="p-6" spacing={6}>
-            <List id='flashcards-list' className="w-64 overflow-y-scroll h-72 mb-5 rounded-md">
+            <List id="flashcards-list" className="w-64 overflow-y-scroll h-72 mb-5 rounded-md">
                 {cardsList.map((card: FlashCard) => (
                     <ListItem
                         key={card.id}
                         id={card.id}
                         onClick={selectCardHandler}
                         className={
-                            props.selectedCard?.id === card.id
+                            selectedCard?.id === card.id
                                 ? `${cardItemCSS} bg-green-400 text-gray-50`
                                 : `${cardItemCSS} hover:bg-green-400 hover:text-gray-50`
                         }
-                        ref={props.selectedCard?.id === card.id ? selectedRef : null}
+                        ref={selectedCard?.id === card.id ? selectedRef : null}
                     >
                         {card.question}
                     </ListItem>
@@ -85,5 +94,5 @@ export function CardList(props: Props) {
             </Flex>
             {cardError.error.length > 0 && <p className="text-red-700">{cardError.error}</p>}
         </Stack>
-    )
+    );
 }
