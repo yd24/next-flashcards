@@ -35,7 +35,7 @@ export function CardList({
             setCards([...cardsList, createdCard]);
             setCardError({ error: '' });
             selectCard(createdCard);
-            console.log(selectedRef.current);
+            //scrolls to last selected card, state is not updating fast enough?
             selectedRef.current?.scrollIntoView({ behavior: 'smooth' });
         } catch (e) {
             console.error(e);

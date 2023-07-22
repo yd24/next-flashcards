@@ -1,11 +1,15 @@
-'use client'
-import { Button, ButtonGroup, useColorModeValue } from '@chakra-ui/react'
+'use client';
+import { Button, ButtonGroup, useColorModeValue } from '@chakra-ui/react';
 
-export function FlashCardButtons() {
+export function FlashCardButtons({ nextCard }: { nextCard: () => void }) {
     return (
-        <ButtonGroup className='flex justify-between'>
-            <Button color={'white'} bg='green.400' _hover={ {bg: 'green.200'} }>Mark Learned</Button>
-            <Button color={'white'} bg='green.400' _hover={ {bg: 'green.200'} }>Next Card</Button>
+        <ButtonGroup justify="between" mt={5} spacing={10}>
+            <Button color={'white'} bg="green.400" _hover={{ bg: 'green.200' }}>
+                Mark Learned
+            </Button>
+            <Button color={'white'} bg="green.400" _hover={{ bg: 'green.200' }} onClick={nextCard}>
+                Next Card
+            </Button>
         </ButtonGroup>
-    )
+    );
 }
