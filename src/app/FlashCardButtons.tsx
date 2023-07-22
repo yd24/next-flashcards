@@ -1,12 +1,11 @@
 'use client'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, ButtonGroup, useColorModeValue } from '@chakra-ui/react'
 
 export function FlashCardButtons() {
     return (
         <ButtonGroup className='flex justify-between'>
-            <Button className='bg-green-400' colorScheme='green'>Flip Card</Button>
-            <Button className='bg-green-400' colorScheme='green'>Mark Learned</Button>
-            <Button className='bg-green-400' colorScheme='green'>Next Card</Button>
+            <Button color={'white'} bg='green.400' _hover={ {bg: 'green.200'} }>Mark Learned</Button>
+            <Button color={'white'} bg='green.400' _hover={ {bg: 'green.200'} }>Next Card</Button>
         </ButtonGroup>
     )
 }

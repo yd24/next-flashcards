@@ -2,7 +2,7 @@ import { CardManager } from './CardManager'
 import { prisma } from '../../db'
 
 export async function ListContainer() {
-    const cards = await prisma.card.findMany()
+    const cards = await prisma.card.findMany();
 
     const createCard = async () => {
         'use server'
@@ -29,7 +29,7 @@ export async function ListContainer() {
     return (
         <div className="flex flex-col justify-flex-start grow pr-12">
             <h1 className="px-12 text-3xl mb-10 pt-5">Manage Cards</h1>
-            <CardManager cards={cards} deleteCard={deleteCard} createCard={createCard} />
+            <CardManager deleteCard={deleteCard} createCard={createCard} cards={cards} />
         </div>
     )
 }

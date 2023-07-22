@@ -1,18 +1,23 @@
 'use client'
 
-import { Flex, Input, Stack, HStack, Button, Checkbox, Text, Textarea } from '@chakra-ui/react'
+import { Box, Flex, Input, Stack, HStack, Button, Checkbox, Text, Textarea } from '@chakra-ui/react'
+import FlashCard from '../common/FlashCard'
 
-export function CardData(props: any) {
+interface Props {
+  selectedCard: FlashCard | null
+}
+
+export function CardData(props: Props) {
     return (
         <Stack className="w-96 p-6 grow" spacing={6}>
             <Stack>
                 <Text>Question</Text>
-                <Input />
+                <Input value={props.selectedCard?.question}/>
             </Stack>
 
             <Stack>
                 <Text>Answer</Text>
-                <Textarea resize="vertical"/>
+                <Textarea value={props.selectedCard?.answer} resize="vertical"/>
             </Stack>
 
             <HStack className="mt-5" justify='space-between'>
@@ -20,9 +25,9 @@ export function CardData(props: any) {
                   <Checkbox>Learned</Checkbox>
                   <Checkbox>Format as Code</Checkbox>
                 </HStack>
-                <div>
+                <Box>
                   <Button>Save Changes</Button>
-                </div>
+                </Box>
             </HStack>
         </Stack>
     );
