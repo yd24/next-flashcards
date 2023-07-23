@@ -16,7 +16,7 @@ export function CardContainer({ cards }: { cards: FlashCards }) {
     let [flipped, setFlipped] = useState(false);
 
     const nextCard = () => {
-        let card = cards.shift();
+        let card = cards.shift()!;
         setFlipped(false);
         setCurrentCard(card);
         cards.push(card);

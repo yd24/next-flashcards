@@ -3,7 +3,7 @@ import { Button, ButtonGroup, useColorModeValue } from '@chakra-ui/react';
 
 export function FlashCardButtons({ nextCard }: { nextCard: () => void }) {
     return (
-        <ButtonGroup justify="between" mt={5} spacing={10}>
+        <ButtonGroup mt={5} spacing={10}>
             <Button color={'white'} bg="green.400" _hover={{ bg: 'green.200' }}>
                 Mark Learned
             </Button>

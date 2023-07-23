@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Stack, Flex, List, ListItem } from '@chakra-ui/react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { MouseEvent } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { setCards } from '../store/cardsSlice';
@@ -35,8 +35,7 @@ export function CardList({
             setCards([...cardsList, createdCard]);
             setCardError({ error: '' });
             selectCard(createdCard);
-            //scrolls to last selected card, state is not updating fast enough?
-            selectedRef.current?.scrollIntoView({ behavior: 'smooth' });
+            //scrolls to last selected card, props is not coming down fast enough?
         } catch (e) {
             console.error(e);
             setCardError({ error: 'Error creating card' });
@@ -72,6 +71,10 @@ export function CardList({
     };
 
     const cardItemCSS = 'p-3 cursor-pointer';
+
+    useEffect(() => {
+      selectedRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [selectedCard])
 
     return (
         <Stack className="p-6" spacing={6}>
