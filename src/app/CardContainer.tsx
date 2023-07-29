@@ -8,7 +8,7 @@ import { setCards } from './store/cardsSlice';
 import type { FlashCardResult, FlashCardsResult } from '../utils/cards';
 import { getRandom } from '../utils/random';
 
-export function CardContainer({ cards }: { cards: FlashCardsResult }) {
+export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult; markLearned: (cardID: string) => void; }) {
     /*const dispatch = useAppDispatch();
     dispatch(setCards(props.cards));*/
 
@@ -26,6 +26,11 @@ export function CardContainer({ cards }: { cards: FlashCardsResult }) {
         setFlipped(!flipped);
     };
 
+    const removeLearned = async(cardID: string) => {
+      let index = cards.findIndex((card) => card.id === cardID);
+      cards.splice(index, 1);
+    };
+
     useEffect(() => {
       nextCard();
     }, []);
@@ -38,7 +43,7 @@ export function CardContainer({ cards }: { cards: FlashCardsResult }) {
                 flipped={flipped}
                 flipCard={flipCard}
             />
-            <FlashCardButtons nextCard={nextCard} />
+            <FlashCardButtons currentCard={currentCard} nextCard={nextCard} markLearned={markLearned} removeLearned={removeLearned}/>
         </div>
     );
 }
