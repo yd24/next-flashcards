@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@/db';
-import { FlashCard } from '../common/FlashCard';
+import type { FlashCard } from '../common/FlashCard';
 
 export const createCard = async () => {
     const createdCard = await prisma.card.create({
@@ -30,7 +30,9 @@ export const updateCard = async (card: FlashCard) => {
       learned: card.learned,
     }
   })
+  return updatedCard;
 }
 
 export type CreateCardResult = Awaited<ReturnType<typeof createCard>>;
 export type DeleteCardResult = Awaited<ReturnType<typeof deleteCard>>;
+export type UpdateCardResult = Awaited<ReturnType<typeof updateCard>>;

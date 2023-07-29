@@ -5,5 +5,5 @@ export const getCards = cache(() => {
     return prisma.card.findMany();
 });
 
-export type FlashCards = Awaited<ReturnType<typeof getCards>>
-export type FlashCard = FlashCards[number]
+export type FlashCardsResult = Awaited<ReturnType<typeof getCards>>
+export type FlashCardResult = FlashCardsResult[number]

@@ -5,19 +5,24 @@ import { CardData } from './CardData';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { setCards } from '../store/cardsSlice';
-import type { FlashCard, FlashCards } from '../../utils/cards';
-import type { CreateCardResult, DeleteCardResult } from './actions';
+import type { FlashCardResult, FlashCardsResult } from '../../utils/cards';
+import type { FlashCard } from '../common/FlashCard'
+import type { CreateCardResult, DeleteCardResult, UpdateCardResult } from './actions';
 
 export function CardManager({
     cards,
     createCard,
     deleteCard,
+    updateCard,
 }: {
-    cards: FlashCards;
+    cards: FlashCardsResult;
     createCard: () => Promise<CreateCardResult>;
     deleteCard: (cardID: string) => Promise<DeleteCardResult>;
+    updateCard: (card: FlashCard) => Promise<UpdateCardResult>;
 }) {
-    const [selectedCard, setSelectedCard] = useState<FlashCard | null>(null);
+    const [selectedCard, setSelectedCard] = useState<FlashCardResult | null>(null);
+    const [cardsList, setCards] = useState(cards);
+    const [cardError, setCardError] = useState({ error: '' });
 
     //Check for if someone navigates directly to card manager, fetch card data
     //const cardsList = useAppSelector((state) => state.cards.cardsList);
@@ -26,20 +31,31 @@ export function CardManager({
         dispatch(setCards(cards));
     }*/
 
-    const selectCard = (card: FlashCard | null) => {
+    const handleSetCards = (cards: FlashCardsResult) => {
+      setCards(cards);
+    }
+
+    const handleSetCardError = (error: { error: string }) => {
+      setCardError(error);
+    }
+
+    const selectCard = (card: FlashCardResult | null) => {
         setSelectedCard(card);
     };
 
     return (
         <div className="flex justify-flex-start items-flex-start px-12 gap-20">
             <CardList
-                cards={cards}
+                cardsList={cardsList}
+                handleSetCards={handleSetCards}
+                cardError={cardError}
+                handleSetCardError={handleSetCardError}
                 createCard={createCard}
                 deleteCard={deleteCard}
                 selectCard={selectCard}
                 selectedCard={selectedCard}
             />
-            <CardData selectedCard={selectedCard} />
+            <CardData updateCard={updateCard} cardsList={cardsList} selectedCard={selectedCard} handleSetCards={handleSetCards}/>
         </div>
     );
 }

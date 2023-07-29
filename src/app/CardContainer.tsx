@@ -5,14 +5,14 @@ import { FlashCardButtons } from './FlashCardButtons';
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from './hooks';
 import { setCards } from './store/cardsSlice';
-import type { FlashCard, FlashCards } from '../utils/cards';
+import type { FlashCardResult, FlashCardsResult } from '../utils/cards';
 import { getRandom } from '../utils/random';
 
-export function CardContainer({ cards }: { cards: FlashCards }) {
+export function CardContainer({ cards }: { cards: FlashCardsResult }) {
     /*const dispatch = useAppDispatch();
     dispatch(setCards(props.cards));*/
 
-    let [currentCard, setCurrentCard] = useState<FlashCard | null>(null);
+    let [currentCard, setCurrentCard] = useState<FlashCardResult | null>(null);
     let [flipped, setFlipped] = useState(false);
 
     const nextCard = () => {
