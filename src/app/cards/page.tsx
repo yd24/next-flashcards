@@ -1,7 +1,13 @@
-
+import { Header } from '../../components/Header';
+import { Footer } from '../../components/Footer';
+import { ListContainer } from './ListContainer';
 
 export default function Page() {
   return (
-    <h1>Hello world!</h1>
+    <>
+      <Header />
+      <ListContainer />
+      <Footer />
+    </>
   );
 };

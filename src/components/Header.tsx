@@ -8,14 +8,15 @@ import {
     Text,
     Button,
     Stack,
+    Link,
     Menu,
     MenuList,
     MenuItem,
     MenuButton,
     MenuDivider,
     useColorModeValue,
-    useDisclosure,
 } from '@chakra-ui/react'
+import NextLink from 'next/link'
 
 export function Header() {
     return (
@@ -33,14 +34,16 @@ export function Header() {
                 justify={'space-between'}
             >
                 <Flex justify={'flex-start'}>
+                  <Link as={NextLink} href="./">
                     <Text fontFamily={'heading'} color={useColorModeValue('gray.800', 'white')}>
                         Simple Flashcards
                     </Text>
+                  </Link>
                 </Flex>
 
                 <Stack justify={'flex-end'} spacing={12} direction={'row'}>
                     <Button
-                        as={'a'}
+                        as={NextLink}
                         fontSize={'sm'}
                         fontWeight={400}
                         variant={'link'}

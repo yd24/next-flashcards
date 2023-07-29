@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const config = {
+    // your Next.js configuration
+    experimental: {
+        serverActions: true,
+    },
+}
 
-module.exports = nextConfig
+module.exports =
+    process.env.ANALYZE === 'true'
+        ? require('@next/bundle-analyzer')({
+              enabled: process.env.ANALYZE === 'true',
+          })(config)
+        : config
