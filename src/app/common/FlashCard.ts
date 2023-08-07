@@ -3,4 +3,5 @@ export type FlashCard = {
   question: string
   answer: string
   learned: boolean
+  code: boolean
 }

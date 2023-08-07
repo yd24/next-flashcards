@@ -39,6 +39,7 @@ export function CardData({
         question: selectedCard?.question ?? '',
         answer: selectedCard?.answer ?? '',
         learned: selectedCard?.learned ?? false,
+        code: selectedCard?.code ?? false,
     };
 
     const [updateCardError, setUpdateCardError] = useState({ error: '' });
@@ -52,6 +53,7 @@ export function CardData({
             question: data?.question ?? '',
             answer: data?.answer ?? '',
             learned: data?.learned ?? false,
+            code: data?.code ?? false,
         };
         try {
             let updatedCard = await updateCard(card);
@@ -101,7 +103,7 @@ export function CardData({
                       <Controller 
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
-                          <Checkbox isDisabled={!selectedCard}>
+                          <Checkbox isDisabled={!selectedCard} isChecked={value} onChange={onChange} onBlur={onBlur}>
                             Format as Code
                           </Checkbox>
                         )}

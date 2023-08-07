@@ -26,6 +26,14 @@ async function main() {
       learned: false,
     },
   });
+
+  const createTestUser = await prisma.user.create({
+    data: {
+      username: 'test',
+      password: 'test1',
+      cards: [],
+    },
+  });
 }
 
 main()
