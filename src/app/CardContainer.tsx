@@ -17,8 +17,8 @@ export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult;
 
     const nextCard = () => {
         let card = cards.shift()!;
-        setFlipped(false);
         setCurrentCard(card);
+        setFlipped(false);
         cards.push(card);
     };
 

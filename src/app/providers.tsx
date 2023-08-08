@@ -14,7 +14,7 @@ export function Providers({
     <CacheProvider>
       <ChakraProvider>
         <Provider store={store}>
-          {children}
+            {children}
         </Provider>
       </ChakraProvider>
     </CacheProvider>
