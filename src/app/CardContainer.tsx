@@ -2,12 +2,13 @@
 
 import { MainFlashCard } from './MainFlashCard';
 import { FlashCardButtons } from './FlashCardButtons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
+import { Box } from '@chakra-ui/react';
 import { useAppDispatch } from './hooks';
 import { setCards } from './store/cardsSlice';
 import type { FlashCardResult, FlashCardsResult } from '../utils/cards';
 import { getRandom } from '../utils/random';
-import { useAnimate } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 
 export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult; markLearned: (cardID: string) => void; }) {
     /*const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult;
 
     let [currentCard, setCurrentCard] = useState<FlashCardResult | null>(null);
     let [flipped, setFlipped] = useState(false);
-    let [scope, animate] = useAnimate();
+    let animControls = useAnimationControls();
 
     const nextCard = () => {
         let card = cards.shift()!;
@@ -24,8 +25,11 @@ export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult;
         cards.push(card);
     };
 
-    const animateCardExit = () => {
-      animate([['.card', { x: -1000 }, { ease: 'easeIn', duration: 0.5}]]);
+    const animateNextCard = () => {
+      animControls.start({x: -1000, transition: {duration: 0.5}}).then(() => {
+        animControls.set({x: 1000});
+        animControls.start({x: 0, transition: {duration: 0.5}});
+      });
     };
 
     const flipCard = () => {
@@ -42,14 +46,16 @@ export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult;
     }, []);
 
     return (
-        <div className="flex flex-col justify-center items-center grow bg-gray-50 gap-6" ref={scope}>
-            <MainFlashCard
-                cards={cards}
-                currentCard={currentCard}
-                flipped={flipped}
-                flipCard={flipCard}
-            />
-            <FlashCardButtons animateCardExit={animateCardExit} currentCard={currentCard} nextCard={nextCard} markLearned={markLearned} removeLearned={removeLearned}/>
+        <div className="overflow-hidden flex flex-col justify-center items-center grow bg-gray-50 gap-6">
+            <motion.div animate={animControls}>
+              <MainFlashCard
+                  cards={cards}
+                  currentCard={currentCard}
+                  flipped={flipped}
+                  flipCard={flipCard}
+              />
+            </motion.div>
+            <FlashCardButtons animateCardExit={animateNextCard} currentCard={currentCard} nextCard={nextCard} markLearned={markLearned} removeLearned={removeLearned}/>
         </div>
     );
 }
