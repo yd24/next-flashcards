@@ -26,8 +26,8 @@ export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult;
     };
 
     const animateNextCard = () => {
-      animControls.start({x: -1000, transition: {duration: 0.5}}).then(() => {
-        animControls.set({x: 1000});
+      animControls.start({x: "-50%", transition: {duration: 0.5}}).then(() => {
+        animControls.set({x: "50%"});
         animControls.start({x: 0, transition: {duration: 0.5}});
       });
     };
