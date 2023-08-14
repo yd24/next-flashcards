@@ -8,32 +8,39 @@ import { useAppDispatch } from './hooks';
 import { setCards } from './store/cardsSlice';
 import type { FlashCardResult, FlashCardsResult } from '../utils/cards';
 import { getRandom } from '../utils/random';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion, useAnimationControls, useAnimate } from 'framer-motion';
 
 export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult; markLearned: (cardID: string) => void; }) {
     /*const dispatch = useAppDispatch();
     dispatch(setCards(props.cards));*/
 
     let [currentCard, setCurrentCard] = useState<FlashCardResult | null>(null);
-    let [flipped, setFlipped] = useState(false);
     let animControls = useAnimationControls();
+    const [scope, animate] = useAnimate();
+    const [rotation, setRotation] = useState(360);
+
+    const animateFlip = () => {
+        let newRotation = rotation;
+        if (newRotation < 360) {
+          setRotation(360);
+          newRotation = 360;
+        } else {
+          setRotation(180);
+          newRotation = 180;
+        }
+        animate([['.card-inner', { rotateY: newRotation }, { duration: 1.2 }]]);
+    };
 
     const nextCard = () => {
-        let card = cards.shift()!;
-        setCurrentCard(card);
-        setFlipped(false);
-        cards.push(card);
-    };
-
-    const animateNextCard = () => {
-      animControls.start({x: "-50%", transition: {duration: 0.5}}).then(() => {
-        animControls.set({x: "50%"});
+      animControls.start({x: "-200%", transition: {duration: 0.5}}).then(() => {
+        animControls.set({x: "200%"});
+        let prevCard = cards.shift()!;
+        cards.push(prevCard);
+        setCurrentCard(cards[0]);
+        animate([['.card-inner', {rotateY: 0}, { duration: 0}]]).complete();
+        setRotation(360);
         animControls.start({x: 0, transition: {duration: 0.5}});
       });
-    };
-
-    const flipCard = () => {
-        setFlipped(!flipped);
     };
 
     const removeLearned = async(cardID: string) => {
@@ -42,20 +49,18 @@ export function CardContainer({ cards, markLearned }: { cards: FlashCardsResult;
     };
 
     useEffect(() => {
-      nextCard();
+      setCurrentCard(cards[0]);
     }, []);
 
     return (
         <div className="overflow-hidden flex flex-col justify-center items-center grow bg-gray-50 gap-6">
-            <motion.div animate={animControls}>
+            <motion.div animate={animControls} ref={scope}>
               <MainFlashCard
-                  cards={cards}
                   currentCard={currentCard}
-                  flipped={flipped}
-                  flipCard={flipCard}
+                  animateFlip={animateFlip}
               />
             </motion.div>
-            <FlashCardButtons animateCardExit={animateNextCard} currentCard={currentCard} nextCard={nextCard} markLearned={markLearned} removeLearned={removeLearned}/>
+            <FlashCardButtons currentCard={currentCard} nextCard={nextCard} markLearned={markLearned} removeLearned={removeLearned}/>
         </div>
     );
 }

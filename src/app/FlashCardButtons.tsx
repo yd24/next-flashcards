@@ -2,7 +2,7 @@
 import { Button, ButtonGroup, useColorModeValue } from '@chakra-ui/react';
 import type { FlashCardResult } from '../utils/cards';
 
-export function FlashCardButtons({ animateCardExit, nextCard, currentCard, markLearned, removeLearned }: { animateCardExit: () => void; nextCard: () => void; currentCard: FlashCardResult | null, markLearned: (cardID: string) => void; removeLearned: (cardID: string) => void;}) {
+export function FlashCardButtons({ nextCard, currentCard, markLearned, removeLearned }: { nextCard: () => void; currentCard: FlashCardResult | null, markLearned: (cardID: string) => void; removeLearned: (cardID: string) => void;}) {
     const handleMarkLearned = () => {
         markLearned(currentCard?.id ?? '');
         removeLearned(currentCard?.id ?? '');
@@ -10,7 +10,6 @@ export function FlashCardButtons({ animateCardExit, nextCard, currentCard, markL
 
     const handleNextCard = () => {
         nextCard();
-        animateCardExit();
     }
 
     return (
