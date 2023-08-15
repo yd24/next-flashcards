@@ -1,7 +1,5 @@
 'use client';
 import { Button, ButtonGroup, useColorModeValue } from '@chakra-ui/react';
-import { markLearned } from './actions';
-import type { UpdateLearnedResult } from './actions';
 import type { FlashCardResult } from '../utils/cards';
 
 export function FlashCardButtons({ nextCard, currentCard, markLearned, removeLearned }: { nextCard: () => void; currentCard: FlashCardResult | null, markLearned: (cardID: string) => void; removeLearned: (cardID: string) => void;}) {
