@@ -8,16 +8,12 @@ export function FlashCardButtons({ nextCard, currentCard, markLearned, removeLea
         removeLearned(currentCard?.id ?? '');
     };
 
-    const handleNextCard = () => {
-        nextCard();
-    }
-
     return (
         <ButtonGroup mt={5} spacing={10}>
             <Button onClick={handleMarkLearned} color={'white'} bg="green.400" _hover={{ bg: 'green.200' }} isDisabled={!currentCard}>
                 Mark Learned
             </Button>
-            <Button color={'white'} bg="green.400" _hover={{ bg: 'green.200' }} onClick={handleNextCard} isDisabled={!currentCard}>
+            <Button color={'white'} bg="green.400" _hover={{ bg: 'green.200' }} onClick={nextCard} isDisabled={!currentCard}>
                 Next Card
             </Button>
         </ButtonGroup>
